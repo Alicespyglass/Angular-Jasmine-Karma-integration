@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 import { UserDetailsComponent } from './user-details.component';
 
@@ -15,8 +15,20 @@ class RouterStub {
 }
 
 class ActivatedRouteStub {
-    // remember to initialise by setting as an empty observable
-    params: Observable<any> = Observable.empty();
+    // to pass in a parameter (import with Observable)
+    private subject = new Subject();
+
+    push(value) {
+        this.subject.next(value);
+    }
+    // remember to initialise by setting as an empty observable - v1
+    // params: Observable<any> = Observable.empty();
+
+    // v2 - looks like a method but is a public property
+    // exposes object as an observable to outside world
+    get params() {
+        return this.subject.asObservable();
+    }
 }
 
 describe('UserDetailsComponent', () => {
@@ -60,5 +72,18 @@ describe('UserDetailsComponent', () => {
         expect(spy).toHaveBeenCalledWith(['users']); // users is the object that we should pass to navigate method
 
     })
+
+    fit('should pass the user to the not found page when an invalid user id is passed', () => {
+        let router = TestBed.get(Router);
+        let spy = spyOn(router, 'navigate');
+
+        // Act - explicitely define as stub type otherwise route is class any
+        let route: ActivatedRouteStub = TestBed.get(ActivatedRoute);
+        route.push({ id: 0 });
+
+        // Assert
+        expect(spy).toHaveBeenCalledWith(['not-found']);
+    })
+
 
 });
