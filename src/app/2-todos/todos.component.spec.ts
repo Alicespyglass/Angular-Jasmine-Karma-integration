@@ -33,11 +33,11 @@ describe('TodosComponent', () => {
     component = fixture.componentInstance;
   });
 
-  fit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('should load todos from the server', () => {
+  it('should load todos from the server', () => {
       // 1 - needs to get refernce to server
       // use debug element gets dependency from the component only. This method is quite noisy however. Would use Testbed
       // fixture.debugElement.injector.get(TodoService);
