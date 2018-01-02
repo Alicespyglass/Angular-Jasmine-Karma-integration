@@ -49,4 +49,15 @@ describe('VoterComponent', () => {
 
         expect(de.classes['highlighted']).toBeTruthy();
     })
+
+    // Test for event binding
+    fit('should increase total votes when I click the upvote button', () => {
+        let button = fixture.debugElement.query(By.css('.glyphicon-menu-up'));
+
+        // first arg = event, second arg = object that represents additional data about the event. Not needed in this instance
+        button.triggerEventHandler('click', null);
+
+        // Assert
+        expect(component.totalVotes).toBe(1);
+    })
 });
