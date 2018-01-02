@@ -27,7 +27,7 @@ describe('VoterComponent', () => {
         // fixture.debugElement
     })
 
-    fit('should render total votes', () => {
+    it('should render total votes', () => {
         component.othersVote = 20;
         component.myVote = 1;
         fixture.detectChanges(); // explicitly tell Angular to detect changes and update Dom
@@ -41,7 +41,7 @@ describe('VoterComponent', () => {
         expect(el.innerText).toContain('21'); // innerText as we're interested in the span
     });
 
-    fit('should highlight the upvote button if I have upvoted', () => {
+    it('should highlight the upvote button if I have upvoted', () => {
         component.myVote = 1;
         fixture.detectChanges();
 
@@ -51,7 +51,7 @@ describe('VoterComponent', () => {
     })
 
     // Test for event binding
-    fit('should increase total votes when I click the upvote button', () => {
+    it('should increase total votes when I click the upvote button', () => {
         let button = fixture.debugElement.query(By.css('.glyphicon-menu-up'));
 
         // first arg = event, second arg = object that represents additional data about the event. Not needed in this instance
