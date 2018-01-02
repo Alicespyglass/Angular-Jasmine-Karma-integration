@@ -37,12 +37,13 @@ describe('HighlightDirective', () => {
       expect(de.nativeElement.style.backgroundColor).toBe('cyan');
   });
 
-  fit('should highlight the second element with yellow', () => {
+  fit('should highlight the second element with defaultColor', () => {
       // reference element
       let de = fixture.debugElement.queryAll(By.css('p'))[1];
+      let directive = de.injector.get(HighlightDirective);
 
       // Assert
-      expect(de.nativeElement.style.backgroundColor).toBe('yellow');
+      expect(de.nativeElement.style.backgroundColor).toBe(directive.defaultColor);
 
   });
 
